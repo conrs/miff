@@ -1,0 +1,12 @@
+Notes:
+	- This is also my 'learning ruby' project. Please don't make fun of the
+	  full-retard mode coding you'll see here. 
+
+
+Progress:
+	- The file I/O framework is in place, not too much more.
+
+
+Other:
+	- How will we determine if lines are moved as opposed to characters
+    	  inside of lines? Do a search across all remaining lines for the longest 	    common subsequence? That seems inefficient and possibly flawed. 
