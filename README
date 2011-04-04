@@ -6,7 +6,12 @@ Notes:
 Progress:
 	- The file I/O framework is in place, not too much more.
 	- LCS algorithm is functioning properly
-
+	- Can now determine character differences for given lines. 
+		- Will freak out if a line is moved...
 Other:
 	- How will we determine if lines are moved as opposed to characters
-    	  inside of lines? Do a search across all remaining lines for the longest 	    common subsequence? That seems inefficient and possibly flawed. 
+    	  inside of lines? Do a search across all remaining lines for the longest 
+	  common subsequence? That seems inefficient and possibly flawed.
+
+Bugs:
+	- Sometimes the difference misses a space character.  

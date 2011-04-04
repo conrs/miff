@@ -37,9 +37,12 @@ def process_files(file1, file2)
 		line1 = file1.readline
 		line2 = file2.readline
 		
-		if(line1 <=> line2)
-			puts "#{line1} #{line2}"
-		end	
+		if(line1 == line2)
+			puts "equal"
+		elsif
+			linelcs = lcs(line1, line2)
+			puts get_difference(linelcs, line1, line2)
+		end
 	end
 
 	if(!file1.eof?)
@@ -49,6 +52,35 @@ def process_files(file1, file2)
 		file2.each {|l| puts "<< #{l}"}
 	end	
 end
+
+
+def get_difference(lcs1, line1, line2)
+	#step through each letter synchronously 
+	added = ""
+	removed = ""
+	(0..lcs1.length).each do |i|
+		if(line1[i] != lcs1[i] || line2[i] != lcs1[i])
+			# aha, we differ here. 
+			temp = i;
+			
+			while(line1[temp] != lcs1[i])
+				removed.concat(line1[temp])
+				temp = temp + 1
+			end
+			line1 = line1[0...i] + line1[temp..-1]	
+			temp = i;
+			
+			while(line2[temp] != lcs1[i])
+				added.concat(line2[temp])
+				temp = temp + 1
+			end
+			line2 = line2[0...i] + line2[temp..-1]
+		end
+	end
+
+	return "- " + removed + "\n+ " + added
+end
+		
 
 # This is where LCS comes in. This function uses 
 # the dynamic programming approach.
