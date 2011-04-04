@@ -5,7 +5,7 @@ Notes:
 
 Progress:
 	- The file I/O framework is in place, not too much more.
-
+	- LCS algorithm is functioning properly
 
 Other:
 	- How will we determine if lines are moved as opposed to characters
