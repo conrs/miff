@@ -29,28 +29,33 @@ def print_nice(x)
 	end
 end
 def process_files(file1, file2)
-	file1  = File.open(file1, "r")
-	file2 = File.open(file2, "r")
 
-	while(!file1.eof? && !file2.eof?)
+	if(File.file?(file1) && File.file?(file2))
+
+		file1  = File.open(file1, "r")
+		file2 = File.open(file2, "r")
+		while(!file1.eof? && !file2.eof?)
 		
-		line1 = file1.readline
-		line2 = file2.readline
-		
-		if(line1 == line2)
-			puts "equal"
-		elsif
-			linelcs = lcs(line1, line2)
-			puts get_difference(linelcs, line1, line2)
+			line1 = file1.readline
+			line2 = file2.readline
+			
+			if(line1 == line2)
+				puts "equal"
+			elsif
+				linelcs = lcs(line1, line2)
+				puts get_difference(linelcs, line1, line2)
+			end
 		end
+ 		
+		if(!file1.eof?)
+			file1.each {|l| puts ">> #{l}"}
+		end
+		if(!file2.eof?)
+			file2.each {|l| puts "<< #{l}"}
+		end	
+	else
+		puts get_difference(lcs(file1, file2), file1, file2)
 	end
-
-	if(!file1.eof?)
-		file1.each {|l| puts ">> #{l}"}
-	end
-	if(!file2.eof?)
-		file2.each {|l| puts "<< #{l}"}
-	end	
 end
 
 
@@ -58,6 +63,7 @@ def get_difference(lcs1, line1, line2)
 	#step through each letter synchronously 
 	added = ""
 	removed = ""
+	puts "line1: #{line1} \nlcs: #{lcs1} \nline2: #{line2}"
 	(0..lcs1.length).each do |i|
 		if(line1[i] != lcs1[i] || line2[i] != lcs1[i])
 			# aha, we differ here. 
@@ -89,7 +95,6 @@ end
 def lcs(line1, line2)
 	
 	# heavily based on Domaratzki's notes - first find the LCS lengths 
-
 	lengths = lcs_lengths(line1, line2)
 	return walk_back(lengths, line1, line2)
 end
@@ -136,5 +141,17 @@ def lcs_lengths(line1, line2)
 	end
 	return ret
 end
+=begin	
+	Character-based LCS's weren't proving great when outputting something meaningful. I have rewritten the algorithm
+	slightly to handle word-based ones instead. 
 
-	main
+	Note the pseudo-mind-blowing fact that all I have to do is split out the words, and then can use the exact same function
+	as I did for the character-based lengths.
+=end
+def word_lcs_lengths(line1, line2)
+	line1_words = line1.split(" ")
+	line2_words = line2.split(" ")
+	
+	return lcs_lengths(line1_words, line2_words)
+end 		
+main
